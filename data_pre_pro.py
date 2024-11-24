@@ -30,9 +30,9 @@ label_encoder = LabelEncoder()
 
 # Define paths for the datasets based on the current working directory
 base_dir = os.path.join(os.getcwd())
-behavior_file = os.path.join(base_dir,'behaviors.parquet')
-history_file = os.path.join(base_dir,'history.parquet')
-articles_file = os.path.join(base_dir, 'articles.parquet')
+behavior_file = os.path.join(base_dir,'ebnerd_demo','train','behaviors.parquet')
+history_file = os.path.join(base_dir,'ebnerd_demo','train','history.parquet')
+articles_file = os.path.join(base_dir,'ebnerd_demo', 'articles.parquet')
 
 
 # In[3]:
@@ -355,7 +355,8 @@ import pandas as pd
 
 # Step 1: Create a new DataFrame with only relevant columns and calculate articles_num for each row
 behavior_df_new = behavior_df[['impression_time', 'article_ids_inview', 'read_time', 'user_id','article_ids_clicked','next_read_time', 'next_scroll_percentage', 'session_id']]
-behavior_df_new['articles_num'] = behavior_df['article_ids_inview'].apply(len)  # Calculate articles_num first
+behavior_df_new = behavior_df.copy()  # Create a copy of the original DataFrame
+behavior_df_new.loc[:, 'articles_num'] = behavior_df['article_ids_inview'].apply(len) # Calculate articles_num first
 
 # Track the original and expected row counts
 original_row_count = len(behavior_df_new)
@@ -989,6 +990,8 @@ print(f"All chunks processed and saved in {output_dir}.")
 
 
 
+
+
 # In[62]:
 
 
@@ -1012,21 +1015,21 @@ print(f"Final dataset saved to {final_output_file}.")
 import pandas as pd
 
 # Path to the Parquet file
-file_path = "final_merged_df_optimized.parquet"
+# file_path = "final_merged_df_optimized.parquet"
 
 # Read the Parquet file
-df = pd.read_parquet(file_path, engine='pyarrow')
+#df = pd.read_parquet(file_path, engine='pyarrow')
 
 # Display the DataFrame
-print(df.head())  # Show the first few rows
+#print(df.head())  # Show the first few rows
 
 
 # In[65]:
 
 
-# Perform one-hot encoding
-df_one_hot = pd.get_dummies(df, columns=['sentiment_label'], prefix='sentiment')
+# # Perform one-hot encoding
+# df_one_hot = pd.get_dummies(df, columns=['sentiment_label'], prefix='sentiment')
 
-# Example output columns: sentiment_negative, sentiment_neutral, sentiment_positive
-print(df_one_hot.head())
+# # Example output columns: sentiment_negative, sentiment_neutral, sentiment_positive
+# print(df_one_hot.head())
 
