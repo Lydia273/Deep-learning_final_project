@@ -92,11 +92,25 @@ import torch
 from sklearn.model_selection import train_test_split
 
 # Step 1: Load train and validation datasets
-dataset_train_parquet = "/dtu/blackhole/1e/203774/output for training data /small output read file/final_df_new.parquet"
+dataset_train_parquet = "/dtu/blackhole/1e/203774/output_for_small_demo/output_for_training_data /final_training.parquet"
 df_train = pd.read_parquet(dataset_train_parquet, engine="pyarrow")
 
-dataset_validation_parquet = "/dtu/blackhole/1e/203774/output for validation data /small output read final/final_df_new.parquet"
+
+df_train = df_train.drop(columns=['articles_num'])
+
+# One-hot encode the 'sentiment_label' column
+df_train = pd.get_dummies(df_train, columns=['sentiment_label'], prefix='sentiment')
+
+
+
+dataset_validation_parquet = "/dtu/blackhole/1e/203774/output_for_small_demo/output_for_validation_data /final_validation.parquet"
 df_validation = pd.read_parquet(dataset_validation_parquet, engine="pyarrow")
+
+df_validation = df_validation.drop(columns=['articles_num'])
+
+# One-hot encode the 'sentiment_label' column
+df_validation = pd.get_dummies(df_validation, columns=['sentiment_label'], prefix='sentiment')
+
 
 # Combine train and validation titles into a single process for tokenization and padding
 all_titles = pd.concat(
