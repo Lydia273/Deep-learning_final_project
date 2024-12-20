@@ -1,5 +1,3 @@
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License.
 from ebrec.models.newsrec.layers import AttLayer2, SelfAttention
 import tensorflow as tf
 import numpy as np
@@ -72,7 +70,7 @@ class NRMSModel:
             object: An optimizer.
         """
         # TODO: shouldn't be a string input you should just set the optimizer, to avoid stuff like this:
-        # => 'WARNING:absl:At this time, the v2.11+ optimizer `tf.keras.optimizers.Adam` runs slowly on M1/M2 Macs, please use the legacy Keras optimizer instead, located at `tf.keras.optimizers.legacy.Adam`.'
+        # => 'WARNING:absl:At this time, the v2.11+ optimizer tf.keras.optimizers.Adam runs slowly on M1/M2 Macs, please use the legacy Keras optimizer instead, located at tf.keras.optimizers.legacy.Adam.'
         if optimizer == "adam":
             train_opt = tf.keras.optimizers.Adam(learning_rate=lr)
         else:
